@@ -144,8 +144,8 @@
               <select name="gender" class="form-input @error('gender') is-invalid @enderror">
                 <!-- I add the "select" command in the combo box (with empty value) -->
                 <option value="" {{ (old("gender") == "" ? "selected": "") }}>Auswählen</option>
-                <option value="M" {{ strcmp("M", old("gender")) ? "selected" : "" }}>Männlich</option>
-                <option value="F" {{ strcmp("F", old("gender")) ? "selected" : "" }}>Weiblich</option>
+                <option value="M" {{ strcmp("M", old("gender")) == 0 ? "selected" : "" }}>Männlich</option>
+                <option value="F" {{ strcmp("F", old("gender")) == 0 ? "selected" : "" }}>Weiblich</option>
               </select>
               <!-- Show error message when gender is not filled -->
               <!-- The error is only shown when the form is submitted. -->
@@ -180,13 +180,13 @@
               <select name="country" class="form-input  @error('country') is-invalid @enderror">
                 <!-- I add the "select" command in the combo box (with empty value) -->
                 <option value="" {{ (old("country") == "" ? "selected": "") }}>Auswählen</option>
-                <option value="de" {{ strcmp("de", old("country")) ? "selected" : "" }}>Deutschland</option>
-                <option value="at" {{ strcmp("at", old("country")) ? "selected" : "" }}>Österreich</option>
-                <option value="ch" {{ strcmp("ch", old("country")) ? "selected" : "" }}>Schweiz</option>
+                <option value="de" {{ strcmp("de", old("country")) == 0 ? "selected" : "" }}>Deutschland</option>
+                <option value="at" {{ strcmp("at", old("country")) == 0 ? "selected" : "" }}>Österreich</option>
+                <option value="ch" {{ strcmp("ch", old("country")) == 0 ? "selected" : "" }}>Schweiz</option>
                 <option value="" disabled="true">-------------------</option>
                 @foreach($countries as $country)
                   <option value="{{ $country['alpha2'] }}" 
-                  {{ strcmp($country['alpha2'], old("country")) ? "selected" : "" }}>{{ $country['name'] }}</option>
+                  {{ strcmp($country['alpha2'], old("country")) == 0 ? "selected" : "" }}>{{ $country['name'] }}</option>
                 @endforeach
               </select>
     
