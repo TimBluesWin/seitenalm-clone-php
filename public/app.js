@@ -36,7 +36,7 @@ function addChildren()
   let childrenHTML = "<div class='flex flex-wrap w-full'>";
   childrenHTML = childrenHTML + "<div class='form-field request required'>";
   childrenHTML = childrenHTML + '<label for="children-name-' + numberOfChildren +  '" class="form-label required">Name des Kindes</label>';
-  childrenHTML = childrenHTML + '<input type="text" id="children-name-' + numberOfChildren + '" required' + 
+  childrenHTML = childrenHTML + '<input type="text" id="children-name-' + numberOfChildren + '" required ' + 
   'name="children[' + numberOfChildren + '][name]" class="form-input">';
   // Closing div for the name of child
   childrenHTML = childrenHTML + '</div>';
