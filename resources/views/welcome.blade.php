@@ -33,6 +33,7 @@
       <!-- Beginning of form -->
       <form name="registration-form" id="registration-form"
       method="post" class="form container gutter-x ce">
+        @csrf
         <!-- Divide the form into 3 fieldsets -->
         <fieldset>
           <!-- Legend for vacation data -->
