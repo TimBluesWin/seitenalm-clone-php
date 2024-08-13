@@ -97,7 +97,8 @@
               <!-- Input field for last name with HTML validation -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
               <input id="first-name" type="text" name="first-name"
-              required pattern="[a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+){0,2}[.]{0,1}" class="@error('first-name') is-invalid @enderror"/>
+              required pattern="[a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+){0,2}[.]{0,1}" 
+              class="form-input @error('first-name') is-invalid @enderror"/>
     
               <!-- Show error message when first name is not valid. -->
               <!-- The error is only shown when the form is submitted. -->
