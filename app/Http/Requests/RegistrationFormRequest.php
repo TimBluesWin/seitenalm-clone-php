@@ -11,7 +11,7 @@ class RegistrationFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -30,32 +30,32 @@ class RegistrationFormRequest extends FormRequest
                 'required',
                 // This regex should allow any character from any language to be inputted.
                 // we don't want numbers in the name.
-                "regex:/(^[a-zA-Z\xC0-\uFFFF]+([ \\-']{0,1}[a-zA-Z\xC0-\uFFFF]+){0,2}[.]{0,1}$)/u"
+                "regex:/^[a-zA-ZäöüßÄÜÖẞ]+([ \\-']{0,1}[a-zA-ZäöüßÄÜÖẞ]+){0,2}[.]{0,1}$/"
             ],
             "last-name" => [
                 'required',
                 // This regex should allow any character from any language to be inputted.
                 // we don't want numbers in the name.
-                "regex:/(^[a-zA-Z\xC0-\uFFFF]+([ \\-']{0,1}[a-zA-Z\xC0-\uFFFF]+){0,2}[.]{0,1}$)/u"
+                "regex:/^[a-zA-ZäöüßÄÜÖẞ]+([ \\-']{0,1}[a-zA-ZäöüßÄÜÖẞ]+){0,2}[.]{0,1}$/"
             ],
             "gender" => "required",
             "street" => [
                 "required",
-                "regex:/(^[^!\?\{\(\[\*%&_=:<>]+$)/u"
+                "regex:/^[^!\?\{\(\[\*%&_=:<>]+$/"
             ],
             "city" => [
                 "required",
-                "regex:/(^[^!\?\{\(\[\*%&_=:<>]+$)/u"
+                "regex:/^[^!\?\{\(\[\*%&_=:<>]+$/"
             ],
             "email" => "required|email",
             "country" => "required",
             "zip-code" => [
                 "required",
-                "regex:/(^[0-9]{4}$)/u"
+                "regex:/^[0-9]{4}$/"
             ],
             "phone-number" => [
-                "required",
-                "regex:/(^[^a-zA-z]+$)/u"
+                "nullable",
+                "regex:/^[^a-zA-z]+$/"
             ]
         ];
     }
