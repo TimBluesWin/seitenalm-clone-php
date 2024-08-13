@@ -32,6 +32,7 @@
       </div>
       <!-- Beginning of form -->
       <form name="registration-form" id="registration-form"
+      action="{!! url('/validate') !!}"
       method="post" class="form container gutter-x ce">
         @csrf
         <!-- Divide the form into 3 fieldsets -->
@@ -47,9 +48,11 @@
                 <label for="vacation-date" class="form-label required">Reisezeitraum</label>
                 <!-- Input field for vacation date (with HTML validation -->
                 <!-- Field becomes red when the input is invalid -->
+                <!-- This "old" function returns the value that is present before the form submission -->
+                <!-- or empty if the input is empty. -->
                 <input id="vacation-date" name="vacation-date"
                 type="date" class="form-input-date form-input form-control input @error('vacation-date') is-invalid @enderror" 
-                required/>
+                value="{{ old("vacation-date") }}" required/>
                 <!-- Show error, when input is invalid. -->
 
                 @error('vacation-date')
@@ -67,7 +70,7 @@
                 <!-- Input field for number of adults (with HTML validation) -->
                 <!-- Field becomes red when input is invalid and form has been submitted. -->
                 <input id="adult" type="number" name="adult" class="form-input @error('adult') is-invalid @enderror" 
-                required min="1" step="1" pattern="[0-9]*"/>
+                required min="1" step="1" pattern="[0-9]*" value="{{ old("adult") }}"/>
                 <!-- Show error message, when number of adults is neither filled in nor positive nor a number. -->
                 <!-- The error is shown only when the form is submitted. -->
                 @error('adult')
@@ -103,7 +106,7 @@
               <label for="first-name" class="form-label required">Vorname</label>
               <!-- Input field for last name with HTML validation -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <input id="first-name" type="text" name="first-name"
+              <input id="first-name" type="text" name="first-name" value="{{ old("first-name") }}"
               required pattern="[a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+){0,2}[.]{0,1}" 
               class="form-input @error('first-name') is-invalid @enderror"/>
     
@@ -121,7 +124,7 @@
               <label for="last-name" class="form-label required">Nachname</label>
               <!-- Input field for last name with HTML validation -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <input id="last-name" type="text" name="last-name"
+              <input id="last-name" type="text" name="last-name" value="{{ old("last-name") }}"
               required pattern="[a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+){0,2}[.]{0,1}" class="form-input @error('last-name') is-invalid @enderror">
     
               <!-- Show error message when last name is not valid. -->
@@ -140,10 +143,9 @@
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
               <select name="gender" class="form-input @error('gender') is-invalid @enderror">
                 <!-- I add the "select" command in the combo box (with empty value) -->
-                <option value="" selected>Auswählen</option>
-                <option value="M" selected>Männlich</option>
-                <option value="F" selected>Weiblich</option>
-                <!-- Use for-loop to add genders into combo box. -->
+                <option value="" {{ (old("gender") == "" ? "selected": "") }}>Auswählen</option>
+                <option value="M" {{ strcmp("M", old("gender")) == 0 ? "selected" : "" }}>Männlich</option>
+                <option value="F" {{ strcmp("F", old("gender")) == 0 ? "selected" : "" }}>Weiblich</option>
               </select>
               <!-- Show error message when gender is not filled -->
               <!-- The error is only shown when the form is submitted. -->
@@ -158,7 +160,7 @@
               <label for="email" class="form-label required">E-Mail</label>
               <!-- Input field for Email with HTML validation -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <input id="email" type="email" name="email"
+              <input id="email" type="email" name="email" value="{{ old("email") }}"
               required class="form-input @error('email') is-invalid @enderror"/>
     
               <!-- Show error message when email is neither filled nor valid. -->
@@ -177,13 +179,14 @@
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
               <select name="country" class="form-input  @error('country') is-invalid @enderror">
                 <!-- I add the "select" command in the combo box (with empty value) -->
-                <option value="" selected>Auswählen</option>
-                <option value="de">Deutschland</option>
-                <option value="at">Österreich</option>
-                <option value="ch">Schweiz</option>
+                <option value="" {{ (old("country") == "" ? "selected": "") }}>Auswählen</option>
+                <option value="de" {{ strcmp("de", old("country")) == 0 ? "selected" : "" }}>Deutschland</option>
+                <option value="at" {{ strcmp("at", old("country")) == 0 ? "selected" : "" }}>Österreich</option>
+                <option value="ch" {{ strcmp("ch", old("country")) == 0 ? "selected" : "" }}>Schweiz</option>
                 <option value="" disabled="true">-------------------</option>
                 @foreach($countries as $country)
-                  <option value="{{ $country['alpha2'] }}">{{ $country['name'] }}</option>
+                  <option value="{{ $country['alpha2'] }}" 
+                  {{ strcmp($country['alpha2'], old("country")) == 0 ? "selected" : "" }}>{{ $country['name'] }}</option>
                 @endforeach
               </select>
     
@@ -202,7 +205,7 @@
               <label for="zip-code" class="form-label required">PLZ</label>
               <!-- Input field for zipcode with HTML validation (allow only 4 digits) -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <input id="zip-code" type="text" name="zip-code" 
+              <input id="zip-code" type="text" name="zip-code" value="{{ old("zip-code") }}"
               required pattern="[0-9]{4}" class="form-input @error('zip-code') is-invalid @enderror"/>
     
               <!-- Show error message when zip code is not valid. -->
@@ -222,7 +225,7 @@
               <label for="city" class="form-label required">Stadt</label>
               <!-- Input field for city -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <input id="city" type="text" pattern='[^!\?\{\(\[\*%&_=:<>]+'
+              <input id="city" type="text" pattern='[^!\?\{\(\[\*%&_=:<>]+' value="{{ old("city") }}"
               name="city" required class="form-input @error('city') is-invalid @enderror"/>
               
     
@@ -240,7 +243,7 @@
               <label for="street" class="form-label required">Straße</label>
               <!-- Input field for street -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <input id="street" type="text" pattern="[^!\?\{\(\[\*%&_=:<>]+"
+              <input id="street" type="text" pattern="[^!\?\{\(\[\*%&_=:<>]+" value="{{ old("street") }}"
               name="street" required class="form-input @error('street') is-invalid @enderror" />
               
     
@@ -257,7 +260,7 @@
               <!-- Label for phone number -->
               <label for="phone-number" class="form-label">Telefon</label>
               <!-- Input field for phone number (not required) -->
-              <input id="phone-number" type="text" pattern="[^a-zA-z]+"
+              <input id="phone-number" type="text" pattern="[^a-zA-z]+" value="{{ old("phone-number") }}"
               name="phone-number" class="form-input @error('phone-number') is-invalid @enderror"/>
     
               <!-- Show error message when telephone number is not valid. -->
@@ -274,7 +277,8 @@
               <!-- Label for question / wish -->
               <label for="question" class="form-label">Fragen oder Wünsche</label>
               <!-- Show text area -->
-              <textarea id="question" name="question" class="h-full form-input"></textarea>
+              <textarea id="question" name="question" value="{{ old("question") }}"
+              class="h-full form-input"></textarea>
             </div>
           </div>
         </fieldset>
@@ -318,5 +322,6 @@
         "altFormat": "d. M Y",
         "dateFormat": "Y-m-d",
       });
+      document.getElementById("vacation-date").value = {!! json_encode(old('vacation-date', '')) !!};
   </script>
 </html>
