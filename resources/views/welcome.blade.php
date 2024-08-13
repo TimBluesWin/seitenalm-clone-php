@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="{{ asset('app.css') }}">
+    <!-- Using flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/de.js"></script>
+    <link rel="stylesheet" href="{{ asset('flatpickr.theme.min.css') }}">
+    <script src="{{ asset('app.js') }}"></script>
   </head>
   <body>
     <main>
@@ -290,4 +296,23 @@
     <!-- End of form -->
     </main>
   </body>
+  <script>
+      // I put it in the end of this view file for easy implementation of
+      // loading the flatpickr after the page is loaded.
+      // Show 2 months if initial width > 640 pixels, otherwise only 1 month.
+      let monthsDisplayed = window.innerWidth >= 640 ? 2 : 1;
+      flatpickr("#vacation-date", {
+        "locale": "de",
+        "mode": "range",
+        "showMonths": monthsDisplayed,
+        "minDate": "today",
+        // I got these dates from inspect element
+        "disable": [
+          {"from":"2024-11-04","to":"2024-12-19"},
+          {"from":"2025-03-17","to":"2025-04-10"}
+        ],
+        "altFormat": "d. M Y",
+        "dateFormat": "Y-m-d",
+      });
+  </script>
 </html>
