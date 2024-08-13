@@ -15,7 +15,7 @@
   </head>
   <body>
     <main>
-      <!-- The introduction of the form; I copied it directly from the original form. -->
+      <!-- The introduction of the form. -->
       <div data-brick="intro" class="ce ce-intro">
         <div class="intro has-body has-no-images  ">
           <div class="intro-body">
@@ -144,7 +144,6 @@
                 <option value="M" selected>Männlich</option>
                 <option value="F" selected>Weiblich</option>
                 <!-- Use for-loop to add genders into combo box. -->
-                <!-- To-do: add genders into combo box. -->
               </select>
               <!-- Show error message when gender is not filled -->
               <!-- The error is only shown when the form is submitted. -->
