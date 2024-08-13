@@ -141,6 +141,8 @@
               <select name="gender" class="form-input @error('gender') is-invalid @enderror">
                 <!-- I add the "select" command in the combo box (with empty value) -->
                 <option value="" selected>Auswählen</option>
+                <option value="M" selected>Männlich</option>
+                <option value="F" selected>Weiblich</option>
                 <!-- Use for-loop to add genders into combo box. -->
                 <!-- To-do: add genders into combo box. -->
               </select>
@@ -181,7 +183,9 @@
                 <option value="at">Österreich</option>
                 <option value="ch">Schweiz</option>
                 <option value="" disabled="true">-------------------</option>
-                <!-- To-do: Add other countries from external .json file. -->
+                @foreach($countries as $country)
+                  <option value="{{ $country['alpha2'] }}">{{ $country['name'] }}</option>
+                @endforeach
               </select>
     
     
