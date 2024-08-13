@@ -88,11 +88,14 @@
           <!-- Importance of children in Seitenalm. -->
           <p class="form-info">Als Familienspezialist ist es uns wichtig, Ihnen ein maßgeschneidertes Angebot zu übermitteln. Bitte geben Sie uns daher den Vornamen und das Alter Ihrer Kinder/Ihres Kindes an.</p>
           <!-- To-do: Add and remove children -->
+          <div class="children" id="children-container">
+
+          </div>
           <div class="text-right request-form-children-control mb-4">
-            <a class="button children-add-button">
+            <a class="button children-add-button" onclick="addChildren()">
               Kind hinzufügen
             </a>
-            <a class="inline-block text-sm m-1 opacity-75 underline hover:no-underline">
+            <a class="inline-block text-sm m-1 opacity-75 underline hover:no-underline" onclick="removeChildren()">
               Kind entfernen
             </a>
           </div>
