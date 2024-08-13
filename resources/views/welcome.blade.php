@@ -322,5 +322,6 @@
         "altFormat": "d. M Y",
         "dateFormat": "Y-m-d",
       });
+      document.getElementById("vacation-date").value = {!! json_encode(old('vacation-date', '')) !!};
   </script>
 </html>
