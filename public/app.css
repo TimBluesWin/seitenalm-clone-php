@@ -632,7 +632,6 @@ button:focus {
   Styling for container that shows some of our inputs are invalid.
   */
   .form-invalid-container {
-    display: none;
     background: var(--color-error);
     color: #fff;
     padding: var(--gutter);
