@@ -89,6 +89,51 @@
           <p class="form-info">Als Familienspezialist ist es uns wichtig, Ihnen ein maßgeschneidertes Angebot zu übermitteln. Bitte geben Sie uns daher den Vornamen und das Alter Ihrer Kinder/Ihres Kindes an.</p>
           <!-- To-do: Add and remove children -->
           <div class="children" id="children-container">
+            <!-- Use for loop if there are old children values. Otherwise show just one set of fields. -->
+            <!-- Unfortunately we cannot use forelse as the old value is null (not empty array) if the -->
+            <!-- page is first initialized. -->
+            @if(!is_null(old("children")))
+              @foreach(old("children") as $i)
+
+              @endforeach
+            @else
+              <div class='flex flex-wrap w-full'>
+                <div class='form-field request required'>
+                  <label for="children-name-1" class="form-label required">Name des Kindes</label>
+                  <input type="text" id="children-name-1" required name="children[1][name]" class="form-input">
+                </div>
+                <div class="w-full">
+                  <div class="form-field required children-container">
+                    <div class="children-label">
+                      <label class="form-label required" for="children-birthday-1">Geburtstag</label>
+                    </div>
+                    <div class="children_wrap form-field">
+                      <select id="children-birthdate-1" required class="form-input"
+                        name="children[1][birthdate]">
+                        <option value="" selected>Tag</option>
+                        @foreach($daysList as $day)
+                          <option value="{{ $day }}">{{ $day }}</option>
+                        @endforeach
+                      </select>
+                      <select id="children-birthmonth-1" required class="form-input"
+                        name="children[1][birthmonth]">
+                        <option value="" selected>Monat</option>
+                        @foreach($monthsList as $month)
+                          <option value="{{ $month }}">{{ $month }}</option>
+                        @endforeach
+                      </select>
+                      <select id="children-birthyear-1" class="form-input"
+                        name="children[1][birthyear]">
+                        <option value="" selected>Jahr</option>
+                        @foreach($yearsList as $year)
+                          <option value="{{ $year }}">{{ $year }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            @endif
 
           </div>
           <div class="text-right request-form-children-control mb-4">
@@ -308,6 +353,7 @@
     </main>
   </body>
   <script>
+      let numberOfChildren = {!! is_null(old("children")) ? 1 : count(old("children")) !!};
       // I put it in the end of this view file for easy implementation of
       // loading the flatpickr after the page is loaded.
       // Show 2 months if initial width > 640 pixels, otherwise only 1 month.
