@@ -93,8 +93,48 @@
             <!-- Unfortunately we cannot use forelse as the old value is null (not empty array) if the -->
             <!-- page is first initialized. -->
             @if(!is_null(old("children")))
-              @foreach(old("children") as $i)
-
+              @foreach(old("children") as $i => $attributes)
+                
+                <div class='flex flex-wrap w-full'>
+                  <div class='form-field request required'>
+                    <label for="children-name-{{ $i }}" class="form-label required">Name des Kindes</label>
+                    <input type="text" id="children-name-{{ $i }}" 
+                      required name="children[{{ $i }}][name]" value="{{ old("children")[$i]["name"] }}" class="form-input">
+                  </div>
+                  <div class="w-full">
+                    <div class="form-field required children-container">
+                      <div class="children-label">
+                        <label class="form-label required" for="children-birthday-{{ $i }}">Geburtstag</label>
+                      </div>
+                      <div class="children_wrap form-field">
+                        <select id="children-birthdate-{{ $i }}" required class="form-input"
+                          name="children[{{ $i }}][birthdate]">
+                          <option value="" {{ !empty(old("children")[$i]["birthdate"]) ? "required" : "" }} >Tag</option>
+                          @foreach($daysList as $day)
+                            <option value="{{ $day }}" 
+                              {{ strcmp($day, old("children")[$i]["birthdate"]) == 0 ? "selected" : "" }} >{{ $day }}</option>
+                          @endforeach
+                        </select>
+                        <select id="children-birthmonth-{{ $i }}" required class="form-input"
+                          name="children[{{ $i }}][birthmonth]">
+                          <option value="" {{ !empty(old("children")[$i]["birthmonth"]) ? "required" : "" }}>Monat</option>
+                          @foreach($monthsList as $month)
+                            <option value="{{ $month }}"
+                            {{ strcmp($month, old("children")[$i]["birthmonth"]) == 0 ? "selected" : "" }}>{{ $month }}</option>
+                          @endforeach
+                        </select>
+                        <select id="children-birthyear-{{ $i }}" class="form-input"
+                          name="children[{{ $i }}][birthyear]">
+                          <option value="" {{ !empty(old("children")[$i]["birthyear"]) ? "required" : "" }}>Jahr</option>
+                          @foreach($yearsList as $year)
+                            <option value="{{ $year }}"
+                              {{ strcmp($year, old("children")[$i]["birthyear"]) == 0 ? "selected" : "" }}>{{ $year }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               @endforeach
             @else
               <div class='flex flex-wrap w-full'>
