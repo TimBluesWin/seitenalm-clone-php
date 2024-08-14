@@ -56,7 +56,12 @@ class RegistrationFormRequest extends FormRequest
             "phone-number" => [
                 "nullable",
                 "regex:/^[^a-zA-z]+$/"
-            ]
+            ],
+            // Using wildcard for each field from each child.
+            'children.*.name' =>'required',
+            'children.*.birthdate' =>'required',
+            'children.*.birthmonth' =>'required',
+            'children.*.birthyear' =>'required',
         ];
     }
 }

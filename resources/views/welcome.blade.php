@@ -88,11 +88,103 @@
           <!-- Importance of children in Seitenalm. -->
           <p class="form-info">Als Familienspezialist ist es uns wichtig, Ihnen ein maßgeschneidertes Angebot zu übermitteln. Bitte geben Sie uns daher den Vornamen und das Alter Ihrer Kinder/Ihres Kindes an.</p>
           <!-- To-do: Add and remove children -->
+          <div class="children" id="children-container">
+            <!-- Use for loop if there are old children values. Otherwise show just one set of fields. -->
+            <!-- Unfortunately we cannot use forelse as the old value is null (not empty array) if the -->
+            <!-- page is first initialized. -->
+            @if(!is_null(old("children")))
+              @foreach(old("children") as $i => $attributes)
+                
+                <div class='flex flex-wrap w-full' id='children-div-{{ $i }}'>
+                  <div class='form-field request required'>
+                    <label for="children-name-{{ $i }}" class="form-label required">Name des Kindes</label>
+                    <input type="text" id="children-name-{{ $i }}" 
+                      required name="children[{{ $i }}][name]" value="{{ old("children")[$i]["name"] }}" class="form-input">
+                  </div>
+                  <div class="w-full">
+                    <div class="form-field required children-container">
+                      <div class="children-label">
+                        <label class="form-label required" for="children-birthday-{{ $i }}">Geburtstag</label>
+                      </div>
+                      <div class="children_wrap form-field">
+                        <select id="children-birthdate-{{ $i }}" required class="form-input"
+                          name="children[{{ $i }}][birthdate]">
+                          <option value="" {{ !empty(old("children")[$i]["birthdate"]) ? "required" : "" }} >Tag</option>
+                          @foreach($daysList as $day)
+                            <option value="{{ $day }}" 
+                              {{ strcmp($day, old("children")[$i]["birthdate"]) == 0 ? "selected" : "" }} >{{ $day }}</option>
+                          @endforeach
+                        </select>
+                        <select id="children-birthmonth-{{ $i }}" required class="form-input"
+                          name="children[{{ $i }}][birthmonth]">
+                          <option value="" {{ !empty(old("children")[$i]["birthmonth"]) ? "required" : "" }}>Monat</option>
+                          @foreach($monthsList as $month)
+                            <option value="{{ $month }}"
+                            {{ strcmp($month, old("children")[$i]["birthmonth"]) == 0 ? "selected" : "" }}>{{ $month }}</option>
+                          @endforeach
+                        </select>
+                        <select id="children-birthyear-{{ $i }}" class="form-input"
+                          name="children[{{ $i }}][birthyear]">
+                          <option value="" {{ !empty(old("children")[$i]["birthyear"]) ? "required" : "" }}>Jahr</option>
+                          @foreach($yearsList as $year)
+                            <option value="{{ $year }}"
+                              {{ strcmp($year, old("children")[$i]["birthyear"]) == 0 ? "selected" : "" }}>{{ $year }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              @endforeach
+            @else
+              <div class='flex flex-wrap w-full' id='children-div-1'>
+                <div class='form-field request required'>
+                  <label for="children-name-1" class="form-label required">Name des Kindes</label>
+                  <input type="text" id="children-name-1" required name="children[1][name]" class="form-input">
+                </div>
+                <div class="w-full">
+                  <div class="form-field required children-container">
+                    <div class="children-label">
+                      <label class="form-label required" for="children-birthday-1">Geburtstag</label>
+                    </div>
+                    <div class="children_wrap form-field">
+                      <select id="children-birthdate-1" required class="form-input"
+                        name="children[1][birthdate]">
+                        <option value="" selected>Tag</option>
+                        @foreach($daysList as $day)
+                          <option value="{{ $day }}">{{ $day }}</option>
+                        @endforeach
+                      </select>
+                      <select id="children-birthmonth-1" required class="form-input"
+                        name="children[1][birthmonth]">
+                        <option value="" selected>Monat</option>
+                        @foreach($monthsList as $month)
+                          <option value="{{ $month }}">{{ $month }}</option>
+                        @endforeach
+                      </select>
+                      <select id="children-birthyear-1" class="form-input"
+                        name="children[1][birthyear]">
+                        <option value="" selected>Jahr</option>
+                        @foreach($yearsList as $year)
+                          <option value="{{ $year }}">{{ $year }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            @endif
+
+          </div>
           <div class="text-right request-form-children-control mb-4">
-            <a class="button children-add-button">
+            <a class="button children-add-button" onclick="addChildren()">
               Kind hinzufügen
             </a>
-            <a class="inline-block text-sm m-1 opacity-75 underline hover:no-underline">
+            <!-- Hide this button if number of child == 1 or if the form is first initialized. -->
+            <a class="inline-block text-sm m-1 opacity-75 underline hover:no-underline"
+            id="remove-child" 
+            style="{{ !is_null(old("children")) && count(old("children")) > 1 ? "display:inline-block" : "display:none" }}"
+            onclick="removeChildren()">
               Kind entfernen
             </a>
           </div>
@@ -305,6 +397,7 @@
     </main>
   </body>
   <script>
+      let numberOfChildren = {!! is_null(old("children")) ? 1 : count(old("children")) !!};
       // I put it in the end of this view file for easy implementation of
       // loading the flatpickr after the page is loaded.
       // Show 2 months if initial width > 640 pixels, otherwise only 1 month.
