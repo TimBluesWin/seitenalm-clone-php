@@ -1,7 +1,7 @@
 let daysBirth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
 let monthsBirth = ['Jan.', 'Feb.', 'März', 'Apr.', 'Mai', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Okt.', 'Nov.', 'Dez.'];
-let yearsBirth = ['2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', 
-    '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'];
+let yearsBirth = ['2024', '2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015', 
+  '2014', '2013', '2012', '2011', '2010', '2009', '2008', '2007', '2006'];
 
 window.addEventListener('resize', function(event) {
     // Because we are reinitializing the flatpickr, we have to first get the value of the travel date
