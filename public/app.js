@@ -32,7 +32,7 @@ window.addEventListener('resize', function(event) {
 function addChildren()
 {
   numberOfChildren = numberOfChildren + 1;
-  let childrenHTML = "<div class='flex flex-wrap w-full'>";
+  let childrenHTML = "<div class='flex flex-wrap w-full' id='children-div-" + numberOfChildren + "'>";
   childrenHTML = childrenHTML + "<div class='form-field request required'>";
   childrenHTML = childrenHTML + '<label for="children-name-' + numberOfChildren +  '" class="form-label required">Name des Kindes</label>';
   childrenHTML = childrenHTML + '<input type="text" id="children-name-' + numberOfChildren + '" required ' + 
@@ -94,8 +94,8 @@ function addChildren()
 
 function removeChildren()
 {
-  let children = document.getElementById("children-container");
-  children.removeChild(children.lastChild);
+  let removedChild = document.getElementById("children-div-" + numberOfChildren.toString());
+  removedChild.remove();
   numberOfChildren = numberOfChildren - 1;
   // If there are only 1 child left, make the "remove child" button invisible.
   if(numberOfChildren == 1)

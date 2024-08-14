@@ -95,7 +95,7 @@
             @if(!is_null(old("children")))
               @foreach(old("children") as $i => $attributes)
                 
-                <div class='flex flex-wrap w-full'>
+                <div class='flex flex-wrap w-full' id='children-div-{{ $i }}'>
                   <div class='form-field request required'>
                     <label for="children-name-{{ $i }}" class="form-label required">Name des Kindes</label>
                     <input type="text" id="children-name-{{ $i }}" 
@@ -137,7 +137,7 @@
                 </div>
               @endforeach
             @else
-              <div class='flex flex-wrap w-full'>
+              <div class='flex flex-wrap w-full' id='children-div-1'>
                 <div class='form-field request required'>
                   <label for="children-name-1" class="form-label required">Name des Kindes</label>
                   <input type="text" id="children-name-1" required name="children[1][name]" class="form-input">
