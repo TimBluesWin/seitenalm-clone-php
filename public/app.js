@@ -84,10 +84,22 @@ function addChildren()
   console.log(childrenHTML);
   childrenDiv = document.getElementById("children-container");
   childrenDiv.insertAdjacentHTML('beforeend', childrenHTML );
+  // Show button to remove child if more than 1 child.
+  if(numberOfChildren > 1)
+  {
+    // This "inline-block" ensures that the remove child button is displayed inline with the add child button.
+    document.getElementById("remove-child").style.display = "inline-block";
+  }
 }
 
 function removeChildren()
 {
   let children = document.getElementById("children-container");
   children.removeChild(children.lastChild);
+  numberOfChildren = numberOfChildren - 1;
+  // If there are only 1 child left, make the "remove child" button invisible.
+  if(numberOfChildren == 1)
+    {
+      document.getElementById("remove-child").style.display = "none";
+    }
 }

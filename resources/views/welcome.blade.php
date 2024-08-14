@@ -180,7 +180,11 @@
             <a class="button children-add-button" onclick="addChildren()">
               Kind hinzufügen
             </a>
-            <a class="inline-block text-sm m-1 opacity-75 underline hover:no-underline" onclick="removeChildren()">
+            <!-- Hide this button if number of child == 1 or if the form is first initialized. -->
+            <a class="inline-block text-sm m-1 opacity-75 underline hover:no-underline"
+            id="remove-child" 
+            style="{{ !is_null(old("children")) && count(old("children")) > 1 ? "display:inline-block" : "display:none" }}"
+            onclick="removeChildren()">
               Kind entfernen
             </a>
           </div>
