@@ -123,7 +123,7 @@
                             {{ strcmp($month, old("children")[$i]["birthmonth"]) == 0 ? "selected" : "" }}>{{ $month }}</option>
                           @endforeach
                         </select>
-                        <select id="children-birthyear-{{ $i }}" class="form-input"
+                        <select id="children-birthyear-{{ $i }}" required class="form-input"
                           name="children[{{ $i }}][birthyear]">
                           <option value="" {{ !empty(old("children")[$i]["birthyear"]) ? "required" : "" }}>Jahr</option>
                           @foreach($yearsList as $year)
@@ -162,7 +162,7 @@
                           <option value="{{ $month }}">{{ $month }}</option>
                         @endforeach
                       </select>
-                      <select id="children-birthyear-1" class="form-input"
+                      <select id="children-birthyear-1" required class="form-input"
                         name="children[1][birthyear]">
                         <option value="" selected>Jahr</option>
                         @foreach($yearsList as $year)
@@ -233,7 +233,7 @@
               <label for="gender" class="form-label required">Geschlecht</label>
               <!-- Combo Box for gender -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <select name="gender" class="form-input @error('gender') is-invalid @enderror">
+              <select required id="gender" name="gender" class="form-input @error('gender') is-invalid @enderror">
                 <!-- I add the "select" command in the combo box (with empty value) -->
                 <option value="" {{ (old("gender") == "" ? "selected": "") }}>Auswählen</option>
                 <option value="M" {{ strcmp("M", old("gender")) == 0 ? "selected" : "" }}>Männlich</option>
@@ -252,7 +252,10 @@
               <label for="email" class="form-label required">E-Mail</label>
               <!-- Input field for Email with HTML validation -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
+
+              <!-- and let the server-side validation do the more complex one. -->
               <input id="email" type="email" name="email" value="{{ old("email") }}"
+              data-pattern='[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*'
               required class="form-input @error('email') is-invalid @enderror"/>
     
               <!-- Show error message when email is neither filled nor valid. -->
@@ -269,7 +272,7 @@
               <label for="country" class="form-label required">Land</label>
               <!-- Combo Box for country -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <select name="country" class="form-input  @error('country') is-invalid @enderror">
+              <select required name="country" id="country" class="form-input  @error('country') is-invalid @enderror">
                 <!-- I add the "select" command in the combo box (with empty value) -->
                 <option value="" {{ (old("country") == "" ? "selected": "") }}>Auswählen</option>
                 <option value="de" {{ strcmp("de", old("country")) == 0 ? "selected" : "" }}>Deutschland</option>
@@ -379,7 +382,14 @@
         <!-- slightly different than the original form. -->
         <!-- The original shows this container when a field is left empty. -->
         @if ($errors->any())
-          <div class="form-invalid-container">
+          <div class="form-invalid-container" id="form-invalid-container">
+            <div class="font-display text-2xl mb-2">
+              Beim Senden des Formulars ist ein Fehler aufgetreten!
+            </div>
+            Die ungültigen Felder wurden hervorgehoben.
+          </div>
+        @else
+          <div class="form-invalid-container" id="form-invalid-container" style="display:none">
             <div class="font-display text-2xl mb-2">
               Beim Senden des Formulars ist ein Fehler aufgetreten!
             </div>
@@ -390,7 +400,9 @@
         <div class="text-center">
           <!-- Send the form. After sending the form only does the validation -->
           <!-- as the requirement of this task is to not make the submit button functional -->
-          <button type="submit" class="button button-special button-large">Anfragen Absenden</button>
+          <!-- However, I do have to make the button not type="submit" so that it will behave -->
+          <!-- exactly like the original form. -->
+          <button onclick="validateAllFields()" class="button button-special button-large">Anfragen Absenden</button>
         </div>
       </form>
     <!-- End of form -->

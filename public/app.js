@@ -203,10 +203,12 @@ function validateSingleField(element)
     addIntoInvalidArray(element.id);
 
   }
+  // This one is needed for onlostfocus on individual field.
   else if(inputIsValid && submitted)
   {
     unhighlightValidField(element.id);
-    // If the 
+    // remove from invalid field list
+    removeFromInvalidArray(element.id)
   }
   if(invalidInputIds.length > 0)
   {
@@ -224,12 +226,21 @@ function validateSingleField(element)
 // I can simply say '{{elementID}}-tooltip' or '{{elementID}}-label' (I will edit the blade file later.)  
 function addIntoInvalidArray(elementId)
 {
-  
+  if(!invalidInputIds.includes(elementId))
+  {
+    invalidInputIds.push(elementId);
+  }
 }
 
 function removeFromInvalidArray(elementId)
 {
-
+  if(invalidInputIds.includes(elementId))
+  {
+    console.log("There is still " + elementId + "in the array!");
+    const newArray = invalidInputIds
+    .filter(item => item !== elementId);
+    invalidInputIds = newArray;
+  }
 }
 
 function validateAllFields()
@@ -242,5 +253,16 @@ function validateAllFields()
     let currentField = inputs[i];
     validateSingleField(currentField);
   }
-  return invalidInputIds > 0;
+  // Now validating select
+  let comboBoxes = document.forms["registration-form"].getElementsByTagName("select");
+  for(let i = 0; i < comboBoxes.length; i++)
+    {
+      let currentField = comboBoxes[i];
+      validateSingleField(currentField);
+    }
+  // Deny submit if any input is invalid by returning false.
+  if(invalidInputIds.length == 0)
+  {
+    document.forms["registration-form"].submit();
+  }
 }
