@@ -55,11 +55,9 @@
                 value="{{ old("vacation-date") }}" required/>
                 <!-- Show error, when input is invalid. -->
 
-                @error('vacation-date')
-                  <div class="form-tooltip">
-                    Geben Sie ein gültiges Datum ein.
-                  </div>
-                @enderror
+                <div class="form-tooltip">
+                  Geben Sie ein gültiges Datum ein.
+                </div>
               </div>
             </div> 
           
@@ -74,11 +72,9 @@
                 required min="1" step="1" pattern="[0-9]*" value="{{ old("adult") }}"/>
                 <!-- Show error message, when number of adults is neither filled in nor positive nor a number. -->
                 <!-- The error is shown only when the form is submitted. -->
-                @error('adult')
-                  <div class="form-tooltip">
-                    Geben Sie eine positive Zahl ein.
-                  </div>
-                @enderror
+                <div class="form-tooltip">
+                  Geben Sie eine positive Zahl ein.
+                </div>
               </div>
             </div>
           </div>
@@ -101,6 +97,9 @@
                     <label for="children-name-{{ $i }}" class="form-label required">Name des Kindes</label>
                     <input type="text" id="children-name-{{ $i }}" onfocusout="validateSingleField(this)"
                       required name="children[{{ $i }}][name]" value="{{ old("children")[$i]["name"] }}" class="form-input">
+                    <div class="form-tooltip">
+                      Geben Sie einen gültigen Namen ein.
+                    </div>
                   </div>
                   <div class="w-full">
                     <div class="form-field required children-container">
@@ -146,6 +145,9 @@
                   <label for="children-name-1" class="form-label required">Name des Kindes</label>
                   <input type="text" onfocusout="validateSingleField(this)"
                   id="children-name-1" required name="children[1][name]" class="form-input">
+                  <div class="form-tooltip">
+                    Geben Sie einen gültigen Namen ein.
+                  </div>
                 </div>
                 <div class="w-full">
                   <div class="form-field required children-container">
@@ -213,11 +215,9 @@
     
               <!-- Show error message when first name is not valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('first-name')
-                <div class="form-tooltip">
-                  Geben Sie einen gültigen Namen ein.
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                Geben Sie einen gültigen Namen ein.
+              </div>
             </div>
     
             <div class="form-field request">
@@ -231,11 +231,9 @@
     
               <!-- Show error message when last name is not valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('last-name')
-                <div class="form-tooltip">
-                    Geben Sie einen gültigen Name ein.
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                  Geben Sie einen gültigen Name ein.
+              </div>
             </div>
     
             <div class="form-field request required">
@@ -252,11 +250,9 @@
               </select>
               <!-- Show error message when gender is not filled -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('gender')
-                <div class="form-tooltip">
-                    Bitte wählen sie Ihr Geschlect aus.
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                  Bitte wählen sie Ihr Geschlect aus.
+              </div>
             </div>
             <div class="form-field request required">
               <!-- Label for Email -->
@@ -272,11 +268,9 @@
     
               <!-- Show error message when email is neither filled nor valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('email')
               <div class="form-tooltip">
                   Geben Sie eine gültige E-Mail Adresse ein.
               </div>
-              @enderror
             </div>
     
             <div class="form-field request required">
@@ -301,11 +295,9 @@
     
               <!-- Show error message when country is not valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('country')
-                <div class="form-tooltip">
-                  Wählen Sie ein Land aus.
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                Wählen Sie ein Land aus.
+              </div>
             </div>
     
             <div class="form-field request required">
@@ -319,14 +311,9 @@
     
               <!-- Show error message when zip code is not valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('zip-code')
-                <div
-                  *ngIf="anmeldungForm.controls.plz.invalid && abgeschickt" class="form-tooltip"
-                >
-                  Geben Sie eine gültige ZIP ein.
-      
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                Geben Sie eine gültige ZIP ein.
+              </div>
             </div>
     
             <div class="form-field request required">
@@ -341,11 +328,9 @@
     
               <!-- Show error message when city is not valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('city')
-                <div class="form-tooltip">
-                  Geben Sie einen Städtenamen ein.
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                Geben Sie einen Städtenamen ein.
+              </div>
             </div>
     
             <!-- Label for street -->
@@ -360,11 +345,9 @@
     
               <!-- Show error message when street is not valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('city')
-                <div class="form-tooltip">
-                  Geben Sie einen Straßennamen ein.
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                Geben Sie einen Straßennamen ein.
+              </div>
             </div>
     
             <div class="form-field request">
@@ -377,11 +360,9 @@
     
               <!-- Show error message when telephone number is not valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('phone-number')
-                <div class="form-tooltip">
-                  Geben Sie eine gültige Telefonnummer ein.
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                Geben Sie eine gültige Telefonnummer ein.
+              </div>
               
             </div>
     

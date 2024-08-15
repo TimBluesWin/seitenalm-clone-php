@@ -54,6 +54,7 @@ function addChildren()
   childrenHTML = childrenHTML + '<label for="children-name-' + numberOfChildren +  '" class="form-label required">Name des Kindes</label>';
   childrenHTML = childrenHTML + '<input type="text" id="children-name-' + numberOfChildren + '" required ' + 
   'onfocusout="validateSingleField(this)"  name="children[' + numberOfChildren + '][name]" class="form-input">';
+  childrenHTML = childrenHTML + '<div class="form-tooltip">Geben Sie einen gültigen Namen ein.</div>';
   // Closing div for the name of child
   childrenHTML = childrenHTML + '</div>';
   childrenHTML = childrenHTML + '<div class="w-full">';
