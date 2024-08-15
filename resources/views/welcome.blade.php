@@ -50,7 +50,7 @@
                 <!-- Field becomes red when the input is invalid -->
                 <!-- This "old" function returns the value that is present before the form submission -->
                 <!-- or empty if the input is empty. -->
-                <input id="vacation-date" name="vacation-date"
+                <input id="vacation-date" name="vacation-date" onfocusout="validateSingleField(this)"
                 type="date" class="form-input-date form-input form-control input @error('vacation-date') is-invalid @enderror" 
                 value="{{ old("vacation-date") }}" required/>
                 <!-- Show error, when input is invalid. -->
@@ -70,6 +70,7 @@
                 <!-- Input field for number of adults (with HTML validation) -->
                 <!-- Field becomes red when input is invalid and form has been submitted. -->
                 <input id="adult" type="number" name="adult" class="form-input @error('adult') is-invalid @enderror" 
+                onfocusout="validateSingleField(this)"
                 required min="1" step="1" pattern="[0-9]*" value="{{ old("adult") }}"/>
                 <!-- Show error message, when number of adults is neither filled in nor positive nor a number. -->
                 <!-- The error is shown only when the form is submitted. -->
@@ -98,7 +99,7 @@
                 <div class='flex flex-wrap w-full' id='children-div-{{ $i }}'>
                   <div class='form-field request required'>
                     <label for="children-name-{{ $i }}" class="form-label required">Name des Kindes</label>
-                    <input type="text" id="children-name-{{ $i }}" 
+                    <input type="text" id="children-name-{{ $i }}" onfocusout="validateSingleField(this)"
                       required name="children[{{ $i }}][name]" value="{{ old("children")[$i]["name"] }}" class="form-input">
                   </div>
                   <div class="w-full">
@@ -108,6 +109,7 @@
                       </div>
                       <div class="children_wrap form-field">
                         <select id="children-birthdate-{{ $i }}" required class="form-input"
+                          onfocusout="validateSingleField(this)"
                           name="children[{{ $i }}][birthdate]">
                           <option value="" {{ !empty(old("children")[$i]["birthdate"]) ? "required" : "" }} >Tag</option>
                           @foreach($daysList as $day)
@@ -116,6 +118,7 @@
                           @endforeach
                         </select>
                         <select id="children-birthmonth-{{ $i }}" required class="form-input"
+                          onfocusout="validateSingleField(this)"
                           name="children[{{ $i }}][birthmonth]">
                           <option value="" {{ !empty(old("children")[$i]["birthmonth"]) ? "required" : "" }}>Monat</option>
                           @foreach($monthsList as $month)
@@ -124,6 +127,7 @@
                           @endforeach
                         </select>
                         <select id="children-birthyear-{{ $i }}" required class="form-input"
+                          onfocusout="validateSingleField(this)"
                           name="children[{{ $i }}][birthyear]">
                           <option value="" {{ !empty(old("children")[$i]["birthyear"]) ? "required" : "" }}>Jahr</option>
                           @foreach($yearsList as $year)
@@ -140,7 +144,8 @@
               <div class='flex flex-wrap w-full' id='children-div-1'>
                 <div class='form-field request required'>
                   <label for="children-name-1" class="form-label required">Name des Kindes</label>
-                  <input type="text" id="children-name-1" required name="children[1][name]" class="form-input">
+                  <input type="text" onfocusout="validateSingleField(this)"
+                  id="children-name-1" required name="children[1][name]" class="form-input">
                 </div>
                 <div class="w-full">
                   <div class="form-field required children-container">
@@ -149,6 +154,7 @@
                     </div>
                     <div class="children_wrap form-field">
                       <select id="children-birthdate-1" required class="form-input"
+                        onfocusout="validateSingleField(this)"
                         name="children[1][birthdate]">
                         <option value="" selected>Tag</option>
                         @foreach($daysList as $day)
@@ -156,6 +162,7 @@
                         @endforeach
                       </select>
                       <select id="children-birthmonth-1" required class="form-input"
+                        onfocusout="validateSingleField(this)"
                         name="children[1][birthmonth]">
                         <option value="" selected>Monat</option>
                         @foreach($monthsList as $month)
@@ -163,6 +170,7 @@
                         @endforeach
                       </select>
                       <select id="children-birthyear-1" required class="form-input"
+                        onfocusout="validateSingleField(this)"
                         name="children[1][birthyear]">
                         <option value="" selected>Jahr</option>
                         @foreach($yearsList as $year)
@@ -199,6 +207,7 @@
               <!-- Input field for last name with HTML validation -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
               <input id="first-name" type="text" name="first-name" value="{{ old("first-name") }}"
+              onfocusout="validateSingleField(this)"
               required pattern="[a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+){0,2}[.]{0,1}" 
               class="form-input @error('first-name') is-invalid @enderror"/>
     
@@ -217,6 +226,7 @@
               <!-- Input field for last name with HTML validation -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
               <input id="last-name" type="text" name="last-name" value="{{ old("last-name") }}"
+              onfocusout="validateSingleField(this)"
               required pattern="[a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+){0,2}[.]{0,1}" class="form-input @error('last-name') is-invalid @enderror">
     
               <!-- Show error message when last name is not valid. -->
@@ -233,7 +243,8 @@
               <label for="gender" class="form-label required">Geschlecht</label>
               <!-- Combo Box for gender -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <select required id="gender" name="gender" class="form-input @error('gender') is-invalid @enderror">
+              <select required id="gender" name="gender" onfocusout="validateSingleField(this)"
+              class="form-input @error('gender') is-invalid @enderror">
                 <!-- I add the "select" command in the combo box (with empty value) -->
                 <option value="" {{ (old("gender") == "" ? "selected": "") }}>Auswählen</option>
                 <option value="M" {{ strcmp("M", old("gender")) == 0 ? "selected" : "" }}>Männlich</option>
@@ -255,6 +266,7 @@
 
               <!-- and let the server-side validation do the more complex one. -->
               <input id="email" type="email" name="email" value="{{ old("email") }}"
+              onfocusout="validateSingleField(this)"
               data-pattern='[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*'
               required class="form-input @error('email') is-invalid @enderror"/>
     
@@ -272,7 +284,8 @@
               <label for="country" class="form-label required">Land</label>
               <!-- Combo Box for country -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <select required name="country" id="country" class="form-input  @error('country') is-invalid @enderror">
+              <select required name="country" id="country" onfocusout="validateSingleField(this)"
+              class="form-input  @error('country') is-invalid @enderror">
                 <!-- I add the "select" command in the combo box (with empty value) -->
                 <option value="" {{ (old("country") == "" ? "selected": "") }}>Auswählen</option>
                 <option value="de" {{ strcmp("de", old("country")) == 0 ? "selected" : "" }}>Deutschland</option>
@@ -301,6 +314,7 @@
               <!-- Input field for zipcode with HTML validation (allow only 4 digits) -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
               <input id="zip-code" type="text" name="zip-code" value="{{ old("zip-code") }}"
+              onfocusout="validateSingleField(this)"
               required pattern="[0-9]{4}" class="form-input @error('zip-code') is-invalid @enderror"/>
     
               <!-- Show error message when zip code is not valid. -->
@@ -320,7 +334,8 @@
               <label for="city" class="form-label required">Stadt</label>
               <!-- Input field for city -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <input id="city" type="text" pattern='[^!\?\{\(\[\*%&_=:<>]+' value="{{ old("city") }}"
+              <input id="city" type="text" onfocusout="validateSingleField(this)"
+              pattern='[^!\?\{\(\[\*%&_=:<>]+' value="{{ old("city") }}"
               name="city" required class="form-input @error('city') is-invalid @enderror"/>
               
     
@@ -338,7 +353,8 @@
               <label for="street" class="form-label required">Straße</label>
               <!-- Input field for street -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <input id="street" type="text" pattern="[^!\?\{\(\[\*%&_=:<>]+" value="{{ old("street") }}"
+              <input id="street" type="text" onfocusout="validateSingleField(this)" 
+              pattern="[^!\?\{\(\[\*%&_=:<>]+" value="{{ old("street") }}"
               name="street" required class="form-input @error('street') is-invalid @enderror" />
               
     
@@ -355,7 +371,8 @@
               <!-- Label for phone number -->
               <label for="phone-number" class="form-label">Telefon</label>
               <!-- Input field for phone number (not required) -->
-              <input id="phone-number" type="text" pattern="[^a-zA-z]+" value="{{ old("phone-number") }}"
+              <input id="phone-number" onfocusout="validateSingleField(this)" 
+              type="text" pattern="[^a-zA-z]+" value="{{ old("phone-number") }}"
               name="phone-number" class="form-input @error('phone-number') is-invalid @enderror"/>
     
               <!-- Show error message when telephone number is not valid. -->

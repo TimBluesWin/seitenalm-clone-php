@@ -53,7 +53,7 @@ function addChildren()
   childrenHTML = childrenHTML + "<div class='form-field request required'>";
   childrenHTML = childrenHTML + '<label for="children-name-' + numberOfChildren +  '" class="form-label required">Name des Kindes</label>';
   childrenHTML = childrenHTML + '<input type="text" id="children-name-' + numberOfChildren + '" required ' + 
-  'name="children[' + numberOfChildren + '][name]" class="form-input">';
+  'onfocusout="validateSingleField(this)"  name="children[' + numberOfChildren + '][name]" class="form-input">';
   // Closing div for the name of child
   childrenHTML = childrenHTML + '</div>';
   childrenHTML = childrenHTML + '<div class="w-full">';
@@ -64,7 +64,7 @@ function addChildren()
   childrenHTML = childrenHTML + '</div>';
   childrenHTML = childrenHTML + '<div class="children_wrap form-field">';
   childrenHTML = childrenHTML + '<select id="children-birthdate-' + numberOfChildren + '" required class="form-input"'
-  childrenHTML = childrenHTML + ' name="children[' + numberOfChildren + '][birthdate]">';
+  childrenHTML = childrenHTML + ' onfocusout="validateSingleField(this)" name="children[' + numberOfChildren + '][birthdate]">';
   childrenHTML = childrenHTML + '<option value="" selected>Tag</option>';
   for(let i = 0; i < daysBirth.length; i++)
   {
@@ -73,7 +73,7 @@ function addChildren()
   // closing select for birth date.
   childrenHTML = childrenHTML + '</select>';
   childrenHTML = childrenHTML + '<select id="children-birthmonth-' + numberOfChildren + '" required class="form-input"'
-  childrenHTML = childrenHTML + ' name="children[' + numberOfChildren + '][birthmonth]">';
+  childrenHTML = childrenHTML + ' onfocusout="validateSingleField(this)" name="children[' + numberOfChildren + '][birthmonth]">';
   childrenHTML = childrenHTML + '<option value="" selected>Monat</option>';
   for(let i = 0; i < monthsBirth.length; i++)
   {
@@ -82,7 +82,7 @@ function addChildren()
   // closing select for birth month.
   childrenHTML = childrenHTML + '</select>';
   childrenHTML = childrenHTML + '<select id="children-birthyear-' + numberOfChildren + '" required class="form-input"'
-  childrenHTML = childrenHTML + ' name="children[' + numberOfChildren + '][birthyear]">';
+  childrenHTML = childrenHTML + ' onfocusout="validateSingleField(this)" name="children[' + numberOfChildren + '][birthyear]">';
   childrenHTML = childrenHTML + '<option value="" selected>Jahr</option>';
   for(let i = 0; i < yearsBirth.length; i++)
   {
