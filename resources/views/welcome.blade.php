@@ -43,7 +43,7 @@
             <div class="w-full">
               <!-- For this I have to use Javascript. If value is filled, then add class "required". If not, remove. -->
               <!-- I might just make this 'required' class only appear after submission, though. -->
-              <div class="form-field request" class="required">
+              <div class="form-field request required" id="vacation-date-field">
                 <!-- Label for vacation date -->
                 <label for="vacation-date" class="form-label required">Reisezeitraum</label>
                 <!-- Input field for vacation date (with HTML validation -->
@@ -62,7 +62,7 @@
             </div> 
           
             <div class="w-full">
-              <div class="form-field request" class="required">
+              <div class="form-field request required" id="adult-field">
                 <!-- Label for number of adults -->
                 <label for="adult" class="form-label required">Anzahl Erwachsene</label>
                 <!-- Input field for number of adults (with HTML validation) -->
@@ -93,7 +93,7 @@
               @foreach(old("children") as $i => $attributes)
                 
                 <div class='flex flex-wrap w-full' id='children-div-{{ $i }}'>
-                  <div class='form-field request required'>
+                  <div class='form-field request required' id="children-name-{{ $i }}-field">
                     <label for="children-name-{{ $i }}" class="form-label required">Name des Kindes</label>
                     <input type="text" id="children-name-{{ $i }}" onfocusout="validateSingleField(this)"
                       required name="children[{{ $i }}][name]" value="{{ old("children")[$i]["name"] }}" class="form-input">
@@ -141,7 +141,7 @@
               @endforeach
             @else
               <div class='flex flex-wrap w-full' id='children-div-1'>
-                <div class='form-field request required'>
+                <div class='form-field request required' id="children-name-1-field">
                   <label for="children-name-1" class="form-label required">Name des Kindes</label>
                   <input type="text" onfocusout="validateSingleField(this)"
                   id="children-name-1" required name="children[1][name]" class="form-input">
@@ -203,7 +203,7 @@
           <!-- Legend for contact data -->
           <legend class="form-legend">Ihre Kontaktdaten</legend>
           <div class="contact-wrap">
-            <div class="form-field request" class="required">
+            <div class="form-field request required" id="first-name-field">
               <!-- Label for first name -->
               <label for="first-name" class="form-label required">Vorname</label>
               <!-- Input field for last name with HTML validation -->
@@ -220,7 +220,7 @@
               </div>
             </div>
     
-            <div class="form-field request">
+            <div class="form-field request required" id="last-name-field">
               <!-- Label for last name -->
               <label for="last-name" class="form-label required">Nachname</label>
               <!-- Input field for last name with HTML validation -->
@@ -236,7 +236,7 @@
               </div>
             </div>
     
-            <div class="form-field request required">
+            <div class="form-field request required" id="gender-field">
               <!-- Label for gender -->
               <label for="gender" class="form-label required">Geschlecht</label>
               <!-- Combo Box for gender -->
@@ -254,7 +254,7 @@
                   Bitte wählen sie Ihr Geschlect aus.
               </div>
             </div>
-            <div class="form-field request required">
+            <div class="form-field request required" id="email-field">
               <!-- Label for Email -->
               <label for="email" class="form-label required">E-Mail</label>
               <!-- Input field for Email with HTML validation -->
@@ -273,7 +273,7 @@
               </div>
             </div>
     
-            <div class="form-field request required">
+            <div class="form-field request required" id="country-field">
               <!-- Label for country -->
               <label for="country" class="form-label required">Land</label>
               <!-- Combo Box for country -->
@@ -300,7 +300,7 @@
               </div>
             </div>
     
-            <div class="form-field request required">
+            <div class="form-field request required" id="zip-code-field">
               <!-- Label for zipcode -->
               <label for="zip-code" class="form-label required">PLZ</label>
               <!-- Input field for zipcode with HTML validation (allow only 4 digits) -->
@@ -316,7 +316,7 @@
               </div>
             </div>
     
-            <div class="form-field request required">
+            <div class="form-field request required" id="city-field">
               <!-- Label for city -->
               <label for="city" class="form-label required">Stadt</label>
               <!-- Input field for city -->
@@ -334,7 +334,7 @@
             </div>
     
             <!-- Label for street -->
-            <div class="form-field request">
+            <div class="form-field request" id="street-field">
               <label for="street" class="form-label required">Straße</label>
               <!-- Input field for street -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->

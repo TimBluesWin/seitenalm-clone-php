@@ -50,7 +50,7 @@ function addChildren()
 {
   numberOfChildren = numberOfChildren + 1;
   let childrenHTML = "<div class='flex flex-wrap w-full' id='children-div-" + numberOfChildren + "'>";
-  childrenHTML = childrenHTML + "<div class='form-field request required'>";
+  childrenHTML = childrenHTML + "<div class='form-field request required' id='children-name-" + numberOfChildren + "-field'>";
   childrenHTML = childrenHTML + '<label for="children-name-' + numberOfChildren +  '" class="form-label required">Name des Kindes</label>';
   childrenHTML = childrenHTML + '<input type="text" id="children-name-' + numberOfChildren + '" required ' + 
   'onfocusout="validateSingleField(this)"  name="children[' + numberOfChildren + '][name]" class="form-input">';
@@ -135,13 +135,62 @@ function removeChildren()
 // and neither do its label change (for the latter I think it would be impossible anyway, as its ID would be different.)
 function highlightInvalidField(elementId)
 {
+  let element = document.getElementById(elementId);
+  let elementName = element.getAttribute('name');
+  console.log("element name is " + elementName);
+  // Skip csrf token.
+  if(element.hasAttribute('required') && element.value === '')
+  {
+    
+    // We should also make sure that the input is not any of the child's birth date, birth month, or birth year.
+    if(!elementId.includes("children-birthdate") && 
+    !elementId.includes("children-birthmonth") &&
+    !elementId.includes("children-birthyear"))
+    {
+      if(!document.getElementById(elementId + "-field").classList.contains("required"))
+        {
+          document.getElementById(elementId + "-field").classList.add("required");
+        }
+    }
 
+    
+  }
+  if(!document.getElementById(elementId).classList.contains("is-invalid"))
+  {
+    element.classList.add("is-invalid")
+  }
+
+  
 }
 
 // Remove tooltip, make the label not bold (if required and value not empty)
 function unhighlightValidField(elementId)
 {
+  let element = document.getElementById(elementId);
+  let elementName = element.getAttribute('name');
+  console.log("element name is " + elementName);
+  // Skip csrf token.
 
+  if(element.hasAttribute('required') && element.value !== '')
+  {
+    if(!elementId.includes("children-birthdate") && 
+    !elementId.includes("children-birthmonth") &&
+    !elementId.includes("children-birthyear"))
+    {
+      if(document.getElementById(elementId + "-field").classList.contains("required"))
+        {
+          document.getElementById(elementId + "-field").classList.remove("required");
+        }
+    }
+
+    
+  }
+  if(document.getElementById(elementId).classList.contains("is-invalid"))
+  {
+    element.classList.remove("is-invalid")
+  }
+
+  
 }
 
 function validateSingleField(element)
@@ -252,7 +301,12 @@ function validateAllFields()
   for(let i = 0; i < inputs.length; i++)
   {
     let currentField = inputs[i];
-    validateSingleField(currentField);
+    let fieldName = currentField.getAttribute("name");
+    if(fieldName.localeCompare("_token") != 0)
+    {
+      validateSingleField(currentField);
+    }
+    
   }
   // Now validating select
   let comboBoxes = document.forms["registration-form"].getElementsByTagName("select");
