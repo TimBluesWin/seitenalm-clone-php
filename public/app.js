@@ -7,13 +7,13 @@ let yearsBirth = ['2024', '2023', '2022', '2021', '2020', '2019', '2018', '2017'
 // The plan is to make a function that checks the whole form for validation.
 // Each ID of invalid field will be stored in this array.
 // If size of this array > 0, show the error container.
-// Later, while the user edits the form, each time the field loses focus, it will validate that particular field.
+// Later, while the user edits the form, each time the field is inputted / changed, it will validate that particular field.
 // This change will add / remove classes from the label and inputs, as well as adding / remove the tooltip.
 // If it becomes valid, remove the id from the list. Otherwise, re-add the id to the list.
 // Then the container can be make hidden once this array becomes empty again.
 
 // Another thing is since the validations are not that complex (only required and patterns in most cases)
-// as well as number of adults at least one, I think we can simply loop the inputs and select fields,
+// as well as number of adults at least one, I think we can simply loop the inputs (except CSRF field) and select fields,
 // and see the pattern, required, and min attribute.
 let invalidInputIds = [];
 
@@ -125,8 +125,7 @@ function removeChildren()
 }
 
 // This does the following thing:
-// - Add tooltip (unfortunately I cannot really make it as simple as "display:block", as there
-//   hovering-only part of the style, so I have to add it programmatically)
+// - Add tooltip (note: tooltip appearance depends on whether there is class "is-invalid" in the input field)
 // - Make the label bold (I can use if element is required and value is empty)
 // - Make border of the input field red (accomplished by class "is-invalid")
 // It should be noted that in the original form, the children's birthday has no tooltip.
@@ -134,8 +133,6 @@ function removeChildren()
 function highlightInvalidField(elementId)
 {
   let element = document.getElementById(elementId);
-  let elementName = element.getAttribute('name');
-  // Skip csrf token.
   if(element.hasAttribute('required') && element.value === '')
   {
     
@@ -164,8 +161,6 @@ function highlightInvalidField(elementId)
 function unhighlightValidField(elementId)
 {
   let element = document.getElementById(elementId);
-  let elementName = element.getAttribute('name');
-  // Skip csrf token.
 
   if(element.hasAttribute('required') && element.value !== '')
   {
@@ -259,7 +254,7 @@ function validateSingleField(element)
 // I think storing element is also possible. However, that would involve
 // having to use document.getElementById each time I want to mess with the tooltip,
 // or adding / removing class for labels.
-// I can simply say '{{elementID}}-tooltip' or '{{elementID}}-label' (I will edit the blade file later.)  
+// I can simply say '{{elementID}}-tooltip' or '{{elementID}}-label'.  
 function addIntoInvalidArray(elementId)
 {
   if(!invalidInputIds.includes(elementId))
@@ -287,6 +282,7 @@ function validateAllFields()
   {
     let currentField = inputs[i];
     let fieldName = currentField.getAttribute("name");
+    // do not run validation on CSRF hidden input.
     if(fieldName.localeCompare("_token") != 0)
     {
       validateSingleField(currentField);
