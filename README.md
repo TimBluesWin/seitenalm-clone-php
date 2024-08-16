@@ -19,4 +19,5 @@ A clone of Seitenalm request form, built using Laravel, HTML, CSS, and Javascrip
     <li>Run "php artisan key:generate" (without quotes)</li>
     <li>Run "php artisan migrate" (without quotes; when asked if you want to create the SQLite DB, type "yes".)</li>
     <li>Afterwards, run "php artisan serve" (without quotes). You should be able to run the app by typing "localhost:8000" (without quotes) into the address bar.</li>
+    <li>Note: If you still experience errors, execute "php artisan config:cache" (without quotes)</li>
 </ol>
