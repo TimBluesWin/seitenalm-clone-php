@@ -43,41 +43,38 @@
             <div class="w-full">
               <!-- For this I have to use Javascript. If value is filled, then add class "required". If not, remove. -->
               <!-- I might just make this 'required' class only appear after submission, though. -->
-              <div class="form-field request" class="required">
+              <div class="form-field request required" id="vacation-date-field">
                 <!-- Label for vacation date -->
                 <label for="vacation-date" class="form-label required">Reisezeitraum</label>
                 <!-- Input field for vacation date (with HTML validation -->
                 <!-- Field becomes red when the input is invalid -->
                 <!-- This "old" function returns the value that is present before the form submission -->
                 <!-- or empty if the input is empty. -->
-                <input id="vacation-date" name="vacation-date"
+                <input id="vacation-date" name="vacation-date" oninput="validateSingleField(this)"
                 type="date" class="form-input-date form-input form-control input @error('vacation-date') is-invalid @enderror" 
                 value="{{ old("vacation-date") }}" required/>
                 <!-- Show error, when input is invalid. -->
 
-                @error('vacation-date')
-                  <div class="form-tooltip">
-                    Geben Sie ein gültiges Datum ein.
-                  </div>
-                @enderror
+                <div class="form-tooltip">
+                  Geben Sie ein gültiges Datum ein.
+                </div>
               </div>
             </div> 
           
             <div class="w-full">
-              <div class="form-field request" class="required">
+              <div class="form-field request required" id="adult-field">
                 <!-- Label for number of adults -->
                 <label for="adult" class="form-label required">Anzahl Erwachsene</label>
                 <!-- Input field for number of adults (with HTML validation) -->
                 <!-- Field becomes red when input is invalid and form has been submitted. -->
                 <input id="adult" type="number" name="adult" class="form-input @error('adult') is-invalid @enderror" 
+                oninput="validateSingleField(this)"
                 required min="1" step="1" pattern="[0-9]*" value="{{ old("adult") }}"/>
                 <!-- Show error message, when number of adults is neither filled in nor positive nor a number. -->
                 <!-- The error is shown only when the form is submitted. -->
-                @error('adult')
-                  <div class="form-tooltip">
-                    Geben Sie eine positive Zahl ein.
-                  </div>
-                @enderror
+                <div class="form-tooltip">
+                  Geben Sie eine positive Zahl ein.
+                </div>
               </div>
             </div>
           </div>
@@ -96,10 +93,13 @@
               @foreach(old("children") as $i => $attributes)
                 
                 <div class='flex flex-wrap w-full' id='children-div-{{ $i }}'>
-                  <div class='form-field request required'>
+                  <div class='form-field request required' id="children-name-{{ $i }}-field">
                     <label for="children-name-{{ $i }}" class="form-label required">Name des Kindes</label>
-                    <input type="text" id="children-name-{{ $i }}" 
+                    <input type="text" id="children-name-{{ $i }}" oninput="validateSingleField(this)"
                       required name="children[{{ $i }}][name]" value="{{ old("children")[$i]["name"] }}" class="form-input">
+                    <div class="form-tooltip">
+                      Geben Sie einen gültigen Namen ein.
+                    </div>
                   </div>
                   <div class="w-full">
                     <div class="form-field required children-container">
@@ -108,6 +108,7 @@
                       </div>
                       <div class="children_wrap form-field">
                         <select id="children-birthdate-{{ $i }}" required class="form-input"
+                          oninput="validateSingleField(this)"
                           name="children[{{ $i }}][birthdate]">
                           <option value="" {{ !empty(old("children")[$i]["birthdate"]) ? "required" : "" }} >Tag</option>
                           @foreach($daysList as $day)
@@ -116,6 +117,7 @@
                           @endforeach
                         </select>
                         <select id="children-birthmonth-{{ $i }}" required class="form-input"
+                          oninput="validateSingleField(this)"
                           name="children[{{ $i }}][birthmonth]">
                           <option value="" {{ !empty(old("children")[$i]["birthmonth"]) ? "required" : "" }}>Monat</option>
                           @foreach($monthsList as $month)
@@ -123,7 +125,8 @@
                             {{ strcmp($month, old("children")[$i]["birthmonth"]) == 0 ? "selected" : "" }}>{{ $month }}</option>
                           @endforeach
                         </select>
-                        <select id="children-birthyear-{{ $i }}" class="form-input"
+                        <select id="children-birthyear-{{ $i }}" required class="form-input"
+                          oninput="validateSingleField(this)"
                           name="children[{{ $i }}][birthyear]">
                           <option value="" {{ !empty(old("children")[$i]["birthyear"]) ? "required" : "" }}>Jahr</option>
                           @foreach($yearsList as $year)
@@ -138,9 +141,13 @@
               @endforeach
             @else
               <div class='flex flex-wrap w-full' id='children-div-1'>
-                <div class='form-field request required'>
+                <div class='form-field request required' id="children-name-1-field">
                   <label for="children-name-1" class="form-label required">Name des Kindes</label>
-                  <input type="text" id="children-name-1" required name="children[1][name]" class="form-input">
+                  <input type="text" oninput="validateSingleField(this)"
+                  id="children-name-1" required name="children[1][name]" class="form-input">
+                  <div class="form-tooltip">
+                    Geben Sie einen gültigen Namen ein.
+                  </div>
                 </div>
                 <div class="w-full">
                   <div class="form-field required children-container">
@@ -149,6 +156,7 @@
                     </div>
                     <div class="children_wrap form-field">
                       <select id="children-birthdate-1" required class="form-input"
+                        oninput="validateSingleField(this)"
                         name="children[1][birthdate]">
                         <option value="" selected>Tag</option>
                         @foreach($daysList as $day)
@@ -156,13 +164,15 @@
                         @endforeach
                       </select>
                       <select id="children-birthmonth-1" required class="form-input"
+                        oninput="validateSingleField(this)"
                         name="children[1][birthmonth]">
                         <option value="" selected>Monat</option>
                         @foreach($monthsList as $month)
                           <option value="{{ $month }}">{{ $month }}</option>
                         @endforeach
                       </select>
-                      <select id="children-birthyear-1" class="form-input"
+                      <select id="children-birthyear-1" required class="form-input"
+                        oninput="validateSingleField(this)"
                         name="children[1][birthyear]">
                         <option value="" selected>Jahr</option>
                         @foreach($yearsList as $year)
@@ -193,47 +203,46 @@
           <!-- Legend for contact data -->
           <legend class="form-legend">Ihre Kontaktdaten</legend>
           <div class="contact-wrap">
-            <div class="form-field request" class="required">
+            <div class="form-field request required" id="first-name-field">
               <!-- Label for first name -->
               <label for="first-name" class="form-label required">Vorname</label>
               <!-- Input field for last name with HTML validation -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
               <input id="first-name" type="text" name="first-name" value="{{ old("first-name") }}"
+              oninput="validateSingleField(this)"
               required pattern="[a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+){0,2}[.]{0,1}" 
               class="form-input @error('first-name') is-invalid @enderror"/>
     
               <!-- Show error message when first name is not valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('first-name')
-                <div class="form-tooltip">
-                  Geben Sie einen gültigen Namen ein.
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                Geben Sie einen gültigen Namen ein.
+              </div>
             </div>
     
-            <div class="form-field request">
+            <div class="form-field request required" id="last-name-field">
               <!-- Label for last name -->
               <label for="last-name" class="form-label required">Nachname</label>
               <!-- Input field for last name with HTML validation -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
               <input id="last-name" type="text" name="last-name" value="{{ old("last-name") }}"
+              oninput="validateSingleField(this)"
               required pattern="[a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+){0,2}[.]{0,1}" class="form-input @error('last-name') is-invalid @enderror">
     
               <!-- Show error message when last name is not valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('last-name')
-                <div class="form-tooltip">
-                    Geben Sie einen gültigen Name ein.
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                  Geben Sie einen gültigen Name ein.
+              </div>
             </div>
     
-            <div class="form-field request required">
+            <div class="form-field request required" id="gender-field">
               <!-- Label for gender -->
               <label for="gender" class="form-label required">Geschlecht</label>
               <!-- Combo Box for gender -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <select name="gender" class="form-input @error('gender') is-invalid @enderror">
+              <select required id="gender" name="gender" oninput="validateSingleField(this)"
+              class="form-input @error('gender') is-invalid @enderror">
                 <!-- I add the "select" command in the combo box (with empty value) -->
                 <option value="" {{ (old("gender") == "" ? "selected": "") }}>Auswählen</option>
                 <option value="M" {{ strcmp("M", old("gender")) == 0 ? "selected" : "" }}>Männlich</option>
@@ -241,35 +250,36 @@
               </select>
               <!-- Show error message when gender is not filled -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('gender')
-                <div class="form-tooltip">
-                    Bitte wählen sie Ihr Geschlect aus.
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                  Bitte wählen sie Ihr Geschlect aus.
+              </div>
             </div>
-            <div class="form-field request required">
+            <div class="form-field request required" id="email-field">
               <!-- Label for Email -->
               <label for="email" class="form-label required">E-Mail</label>
               <!-- Input field for Email with HTML validation -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
+
+              <!-- and let the server-side validation do the more complex one. -->
               <input id="email" type="email" name="email" value="{{ old("email") }}"
+              onchange="validateSingleField(this)"
+              data-pattern='[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*'
               required class="form-input @error('email') is-invalid @enderror"/>
     
               <!-- Show error message when email is neither filled nor valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('email')
               <div class="form-tooltip">
                   Geben Sie eine gültige E-Mail Adresse ein.
               </div>
-              @enderror
             </div>
     
-            <div class="form-field request required">
+            <div class="form-field request required" id="country-field">
               <!-- Label for country -->
               <label for="country" class="form-label required">Land</label>
               <!-- Combo Box for country -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <select name="country" class="form-input  @error('country') is-invalid @enderror">
+              <select required name="country" id="country" oninput="validateSingleField(this)"
+              class="form-input  @error('country') is-invalid @enderror">
                 <!-- I add the "select" command in the combo box (with empty value) -->
                 <option value="" {{ (old("country") == "" ? "selected": "") }}>Auswählen</option>
                 <option value="de" {{ strcmp("de", old("country")) == 0 ? "selected" : "" }}>Deutschland</option>
@@ -285,83 +295,74 @@
     
               <!-- Show error message when country is not valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('country')
-                <div class="form-tooltip">
-                  Wählen Sie ein Land aus.
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                Wählen Sie ein Land aus.
+              </div>
             </div>
     
-            <div class="form-field request required">
+            <div class="form-field request required" id="zip-code-field">
               <!-- Label for zipcode -->
               <label for="zip-code" class="form-label required">PLZ</label>
               <!-- Input field for zipcode with HTML validation (allow only 4 digits) -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
               <input id="zip-code" type="text" name="zip-code" value="{{ old("zip-code") }}"
+              oninput="validateSingleField(this)"
               required pattern="[0-9]{4}" class="form-input @error('zip-code') is-invalid @enderror"/>
     
               <!-- Show error message when zip code is not valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('zip-code')
-                <div
-                  *ngIf="anmeldungForm.controls.plz.invalid && abgeschickt" class="form-tooltip"
-                >
-                  Geben Sie eine gültige ZIP ein.
-      
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                Geben Sie eine gültige ZIP ein.
+              </div>
             </div>
     
-            <div class="form-field request required">
+            <div class="form-field request required" id="city-field">
               <!-- Label for city -->
               <label for="city" class="form-label required">Stadt</label>
               <!-- Input field for city -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <input id="city" type="text" pattern='[^!\?\{\(\[\*%&_=:<>]+' value="{{ old("city") }}"
+              <input id="city" type="text" oninput="validateSingleField(this)"
+              pattern='[^!\?\{\(\[\*%&_=:<>]+' value="{{ old("city") }}"
               name="city" required class="form-input @error('city') is-invalid @enderror"/>
               
     
               <!-- Show error message when city is not valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('city')
-                <div class="form-tooltip">
-                  Geben Sie einen Städtenamen ein.
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                Geben Sie einen Städtenamen ein.
+              </div>
             </div>
     
             <!-- Label for street -->
-            <div class="form-field request">
+            <div class="form-field request" id="street-field">
               <label for="street" class="form-label required">Straße</label>
               <!-- Input field for street -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <input id="street" type="text" pattern="[^!\?\{\(\[\*%&_=:<>]+" value="{{ old("street") }}"
+              <input id="street" type="text" oninput="validateSingleField(this)" 
+              pattern="[^!\?\{\(\[\*%&_=:<>]+" value="{{ old("street") }}"
               name="street" required class="form-input @error('street') is-invalid @enderror" />
               
     
               <!-- Show error message when street is not valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('city')
-                <div class="form-tooltip">
-                  Geben Sie einen Straßennamen ein.
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                Geben Sie einen Straßennamen ein.
+              </div>
             </div>
     
             <div class="form-field request">
               <!-- Label for phone number -->
               <label for="phone-number" class="form-label">Telefon</label>
               <!-- Input field for phone number (not required) -->
-              <input id="phone-number" type="text" pattern="[^a-zA-z]+" value="{{ old("phone-number") }}"
+              <input id="phone-number" oninput="validateSingleField(this)" 
+              type="text" pattern="[^a-zA-z]+" value="{{ old("phone-number") }}"
               name="phone-number" class="form-input @error('phone-number') is-invalid @enderror"/>
     
               <!-- Show error message when telephone number is not valid. -->
               <!-- The error is only shown when the form is submitted. -->
-              @error('phone-number')
-                <div class="form-tooltip">
-                  Geben Sie eine gültige Telefonnummer ein.
-                </div>
-              @enderror
+              <div class="form-tooltip">
+                Geben Sie eine gültige Telefonnummer ein.
+              </div>
               
             </div>
     
@@ -379,7 +380,14 @@
         <!-- slightly different than the original form. -->
         <!-- The original shows this container when a field is left empty. -->
         @if ($errors->any())
-          <div class="form-invalid-container">
+          <div class="form-invalid-container" id="form-invalid-container">
+            <div class="font-display text-2xl mb-2">
+              Beim Senden des Formulars ist ein Fehler aufgetreten!
+            </div>
+            Die ungültigen Felder wurden hervorgehoben.
+          </div>
+        @else
+          <div class="form-invalid-container" id="form-invalid-container" style="display:none">
             <div class="font-display text-2xl mb-2">
               Beim Senden des Formulars ist ein Fehler aufgetreten!
             </div>
@@ -390,7 +398,9 @@
         <div class="text-center">
           <!-- Send the form. After sending the form only does the validation -->
           <!-- as the requirement of this task is to not make the submit button functional -->
-          <button type="submit" class="button button-special button-large">Anfragen Absenden</button>
+          <!-- However, I do have to make the button not type="submit" so that it will behave -->
+          <!-- exactly like the original form. -->
+          <button onclick="validateAllFields()" class="button button-special button-large">Anfragen Absenden</button>
         </div>
       </form>
     <!-- End of form -->
