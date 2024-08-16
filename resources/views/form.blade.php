@@ -1,4 +1,4 @@
-<html>
+<html lang="de">
   <head>
     <meta charset="utf-8">
     <title>Seitenalm</title>
@@ -104,19 +104,19 @@
                   <div class="w-full">
                     <div class="form-field required children-container">
                       <div class="children-label">
-                        <label class="form-label required" for="children-birthday-{{ $i }}">Geburtstag</label>
+                        <label class="form-label required" for="children-birthdate-{{ $i }}">Geburtstag</label>
                       </div>
                       <div class="children_wrap form-field">
-                        <select id="children-birthdate-{{ $i }}" required class="form-input"
+                        <select id="children-birthdate-{{ $i }}" title="Children {{ $i }} Birth Date" required class="form-input"
                           oninput="validateSingleField(this)"
                           name="children[{{ $i }}][birthdate]">
                           <option value="" {{ !empty(old("children")[$i]["birthdate"]) ? "required" : "" }} >Tag</option>
                           @foreach($daysList as $day)
                             <option value="{{ $day }}" 
-                              {{ strcmp($day, old("children")[$i]["birthdate"]) == 0 ? "selected" : "" }} >{{ $day }}</option>
+                              {{ strcmp($day, old("children")[$i]["birthdate"]) == 0 ? "selected" : "" }} >{{ $day }}.</option>
                           @endforeach
                         </select>
-                        <select id="children-birthmonth-{{ $i }}" required class="form-input"
+                        <select id="children-birthmonth-{{ $i }}" title="Children {{ $i }} Birth Month" required class="form-input"
                           oninput="validateSingleField(this)"
                           name="children[{{ $i }}][birthmonth]">
                           <option value="" {{ !empty(old("children")[$i]["birthmonth"]) ? "required" : "" }}>Monat</option>
@@ -125,7 +125,7 @@
                             {{ strcmp($month, old("children")[$i]["birthmonth"]) == 0 ? "selected" : "" }}>{{ $month }}</option>
                           @endforeach
                         </select>
-                        <select id="children-birthyear-{{ $i }}" required class="form-input"
+                        <select id="children-birthyear-{{ $i }}" title="Children {{ $i }} Birth Year" required class="form-input"
                           oninput="validateSingleField(this)"
                           name="children[{{ $i }}][birthyear]">
                           <option value="" {{ !empty(old("children")[$i]["birthyear"]) ? "required" : "" }}>Jahr</option>
@@ -152,18 +152,18 @@
                 <div class="w-full">
                   <div class="form-field required children-container">
                     <div class="children-label">
-                      <label class="form-label required" for="children-birthday-1">Geburtstag</label>
+                      <label class="form-label required" for="children-birthdate-1">Geburtstag</label>
                     </div>
                     <div class="children_wrap form-field">
-                      <select id="children-birthdate-1" required class="form-input"
+                      <select id="children-birthdate-1" title="Children 1 Birth Date" required class="form-input"
                         oninput="validateSingleField(this)"
                         name="children[1][birthdate]">
                         <option value="" selected>Tag</option>
                         @foreach($daysList as $day)
-                          <option value="{{ $day }}">{{ $day }}</option>
+                          <option value="{{ $day }}">{{ $day }}.</option>
                         @endforeach
                       </select>
-                      <select id="children-birthmonth-1" required class="form-input"
+                      <select id="children-birthmonth-1" title="Children 1 Birth Month" required class="form-input"
                         oninput="validateSingleField(this)"
                         name="children[1][birthmonth]">
                         <option value="" selected>Monat</option>
@@ -171,7 +171,7 @@
                           <option value="{{ $month }}">{{ $month }}</option>
                         @endforeach
                       </select>
-                      <select id="children-birthyear-1" required class="form-input"
+                      <select id="children-birthyear-1" title="Children 1 Birth Year" required class="form-input"
                         oninput="validateSingleField(this)"
                         name="children[1][birthyear]">
                         <option value="" selected>Jahr</option>
@@ -208,7 +208,7 @@
               <label for="first-name" class="form-label required">Vorname</label>
               <!-- Input field for last name with HTML validation -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <input id="first-name" type="text" name="first-name" value="{{ old("first-name") }}"
+              <input id="first-name" autocomplete="off" type="text" name="first-name" value="{{ old("first-name") }}"
               oninput="validateSingleField(this)"
               required pattern="[a-zA-Z\xC0-\uFFFF]+([ \-']{0,1}[a-zA-Z\xC0-\uFFFF]+){0,2}[.]{0,1}" 
               class="form-input @error('first-name') is-invalid @enderror"/>
@@ -242,7 +242,7 @@
               <!-- Combo Box for gender -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
               <select required id="gender" name="gender" oninput="validateSingleField(this)"
-              class="form-input @error('gender') is-invalid @enderror">
+              title="Gender" class="form-input @error('gender') is-invalid @enderror">
                 <!-- I add the "select" command in the combo box (with empty value) -->
                 <option value="" {{ (old("gender") == "" ? "selected": "") }}>Auswählen</option>
                 <option value="M" {{ strcmp("M", old("gender")) == 0 ? "selected" : "" }}>Männlich</option>
@@ -261,7 +261,7 @@
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
 
               <!-- and let the server-side validation do the more complex one. -->
-              <input id="email" type="email" name="email" value="{{ old("email") }}"
+              <input id="email" autocomplete="off" type="email" name="email" value="{{ old("email") }}"
               onchange="validateSingleField(this)"
               data-pattern='[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*'
               required class="form-input @error('email') is-invalid @enderror"/>
@@ -278,7 +278,7 @@
               <label for="country" class="form-label required">Land</label>
               <!-- Combo Box for country -->
               <!-- Field becomes red when the value is invalid (and if the form is submitted) -->
-              <select required name="country" id="country" oninput="validateSingleField(this)"
+              <select title="Country" autocomplete="off" required name="country" id="country" oninput="validateSingleField(this)"
               class="form-input  @error('country') is-invalid @enderror">
                 <!-- I add the "select" command in the combo box (with empty value) -->
                 <option value="" {{ (old("country") == "" ? "selected": "") }}>Auswählen</option>
@@ -400,7 +400,7 @@
           <!-- as the requirement of this task is to not make the submit button functional -->
           <!-- However, I do have to make the button not type="submit" so that it will behave -->
           <!-- exactly like the original form. -->
-          <button onclick="validateAllFields()" class="button button-special button-large">Anfragen Absenden</button>
+          <button type="button" onclick="validateAllFields()" class="button button-special button-large">Anfragen Absenden</button>
         </div>
       </form>
     <!-- End of form -->
