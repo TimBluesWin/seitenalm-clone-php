@@ -26,7 +26,6 @@ window.addEventListener('resize', function(event) {
     let travelDate = document.getElementById("vacation-date").value;
     // Redefine the number of months
     let monthCount = window.innerWidth >= 640 ? 2 : 1;
-    console.log(monthCount);
     // Redefine flatpickr
     flatpickr("#vacation-date", {
       "locale": "de",
@@ -99,7 +98,6 @@ function addChildren()
   childrenHTML = childrenHTML + '</div>';
   // Closing div for whole child.
   childrenHTML = childrenHTML + '</div>';
-  console.log(childrenHTML);
   childrenDiv = document.getElementById("children-container");
   childrenDiv.insertAdjacentHTML('beforeend', childrenHTML );
   // Show button to remove child if more than 1 child.
@@ -137,7 +135,6 @@ function highlightInvalidField(elementId)
 {
   let element = document.getElementById(elementId);
   let elementName = element.getAttribute('name');
-  console.log("element name is " + elementName);
   // Skip csrf token.
   if(element.hasAttribute('required') && element.value === '')
   {
@@ -168,7 +165,6 @@ function unhighlightValidField(elementId)
 {
   let element = document.getElementById(elementId);
   let elementName = element.getAttribute('name');
-  console.log("element name is " + elementName);
   // Skip csrf token.
 
   if(element.hasAttribute('required') && element.value !== '')
@@ -203,11 +199,8 @@ function validateSingleField(element)
   // This can then be retrieved at the end of validation to add / not add to the invalid element id array.
   let inputIsValid = true;
 
-  console.log("testing: " + element.id);
-
   if(element.hasAttribute('required') && element.value === '')
   {
-    console.log(element.id + " fails required test; it's empty.");
     inputIsValid = false;
   }
   // Does regex checking. It shouldn't check if element is empty.
@@ -224,10 +217,8 @@ function validateSingleField(element)
     }
     // This RegExp class allows us to construct regex from the given pattern attribute.
     let regex = new RegExp("^" + pattern + "$");
-    console.log(regex);
     if(!regex.test(element.value))
     {
-      console.log(element.id + " fails pattern test.");
       inputIsValid = false;
     }
   }
@@ -238,13 +229,8 @@ function validateSingleField(element)
     
     if(parseInt(element.value) < minimumValue)
     {
-      console.log(element.id + " fails min test. Expected minimum: " + minimumValue + ", actual value: " + element.value);
       inputIsValid = false;
     }
-  }
-  if(inputIsValid)
-  {
-    console.log(element.id + " is valid!");
   }
   if(!inputIsValid && submitted)
   {
@@ -286,7 +272,6 @@ function removeFromInvalidArray(elementId)
 {
   if(invalidInputIds.includes(elementId))
   {
-    console.log("There is still " + elementId + "in the array!");
     const newArray = invalidInputIds
     .filter(item => item !== elementId);
     invalidInputIds = newArray;
