@@ -68,7 +68,7 @@ function addChildren()
   childrenHTML = childrenHTML + '<option value="" selected>Tag</option>';
   for(let i = 0; i < daysBirth.length; i++)
   {
-    childrenHTML = childrenHTML + '<option value="' + daysBirth[i] + '">' + daysBirth[i] + '</option>'
+    childrenHTML = childrenHTML + '<option value="' + daysBirth[i] + '">' + daysBirth[i] + '.</option>'
   }
   // closing select for birth date.
   childrenHTML = childrenHTML + '</select>';

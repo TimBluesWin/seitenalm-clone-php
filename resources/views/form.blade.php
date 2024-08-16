@@ -113,7 +113,7 @@
                           <option value="" {{ !empty(old("children")[$i]["birthdate"]) ? "required" : "" }} >Tag</option>
                           @foreach($daysList as $day)
                             <option value="{{ $day }}" 
-                              {{ strcmp($day, old("children")[$i]["birthdate"]) == 0 ? "selected" : "" }} >{{ $day }}</option>
+                              {{ strcmp($day, old("children")[$i]["birthdate"]) == 0 ? "selected" : "" }} >{{ $day }}.</option>
                           @endforeach
                         </select>
                         <select id="children-birthmonth-{{ $i }}" title="Children {{ $i }} Birth Month" required class="form-input"
@@ -160,7 +160,7 @@
                         name="children[1][birthdate]">
                         <option value="" selected>Tag</option>
                         @foreach($daysList as $day)
-                          <option value="{{ $day }}">{{ $day }}</option>
+                          <option value="{{ $day }}">{{ $day }}.</option>
                         @endforeach
                       </select>
                       <select id="children-birthmonth-1" title="Children 1 Birth Month" required class="form-input"
